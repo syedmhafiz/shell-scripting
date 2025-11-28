@@ -1,0 +1,35 @@
+
+List of log files updated in the last 24 hours:
+
+./system.log
+./application.log
+
+Analyzing logs from ./system.log...
+
+Number of critical found:
+90
+Number of error found:
+89
+Number of warn found:
+85
+Number of debug found:
+80
+Number of info found:
+106
+
+======================
+
+Analyzing logs from ./application.log...
+
+Number of critical found:
+82
+Number of error found:
+91
+Number of warn found:
+81
+Number of debug found:
+93
+Number of info found:
+103
+
+======================
