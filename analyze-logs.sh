@@ -1,34 +1,23 @@
 #!/bin/zsh
 
+# Configuration
 APP_LOG_FILE="application.log"
 SYSTEM_LOG_FILE="system.log"
+ERROR_PATTERNS=("CRITICAL" "ERROR" "WARN" "DEBUG" "INFO")
 
-ERROR_PATTERNS=("CRITICAL" "ERROR" "WARN" "DEBUG" "INFO") 
+# Find and display recently updated log files
+echo "\nList of log files updated in the last 24 hours:\n"
+LOG_FILES=$(find . -name "*.log" -mtime -1)
+echo "$LOG_FILES"
 
-
-echo "Analyzing logs from Application..."
-
-echo "\nNumber of Critical found:"
-grep -c "$ERROR_PATTERNS[1]" $APP_LOG_FILE
-echo "\nNumber of Error found:"
-grep -c "$ERROR_PATTERNS[2]" $APP_LOG_FILE
-echo "\nNumber of Warn found:"
-grep -c "$ERROR_PATTERNS[3]" $APP_LOG_FILE
-echo "\nNumber of Debug found:"
-grep -c "$ERROR_PATTERNS[4]" $APP_LOG_FILE
-echo "\nNumber of Info found:"
-grep -c "$ERROR_PATTERNS[5]" $APP_LOG_FILE
-
-echo "\n======================"
-
-echo "\nAnalyzing logs from System..."
-echo "\nNumber of Critical found:"
-grep -c "$ERROR_PATTERNS[1]" $SYSTEM_LOG_FILE
-echo "\nNumber of Error found:"
-grep -c "$ERROR_PATTERNS[2]" $SYSTEM_LOG_FILE
-echo "\nNumber of Warn found:"
-grep -c "$ERROR_PATTERNS[3]" $SYSTEM_LOG_FILE
-echo "\nNumber of Debug found:"
-grep -c "$ERROR_PATTERNS[4]" $SYSTEM_LOG_FILE
-echo "\nNumber of Info found:"
-grep -c "$ERROR_PATTERNS[5]" $SYSTEM_LOG_FILE
+# Analyze each found log file
+for LOG_FILE in ${(f)LOG_FILES}; do
+    echo "\nAnalyzing logs from $LOG_FILE..."
+    
+    for i in {1..5}; do
+        echo "\nNumber of ${(L)ERROR_PATTERNS[$i]} found:"
+        grep -c "$ERROR_PATTERNS[$i]" "$LOG_FILE"
+    done
+    
+    echo "\n======================"
+done
